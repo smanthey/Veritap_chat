@@ -27,10 +27,10 @@ export default function Chatbot() {
               </button>
             </div>
             <div className="flex-1 overflow-auto p-4 space-y-4">
-              {messages.map(m => (
-                <div key={m.id} className={`${m.role === 'user' ? 'text-right' : 'text-left'}`}>
-                  <span className={`inline-block p-2 rounded-lg ${m.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                    {m.content}
+              {messages.map((message) => (
+                <div key={message.id} className={`${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+                  <span className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                    {typeof message.content === 'string' ? message.content : JSON.stringify(message.content)}
                   </span>
                 </div>
               ))}
