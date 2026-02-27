@@ -1,0 +1,10 @@
+{
+  "name": "veritap-chat",
+  "module_type": "app",
+  "framework": "nextjs",
+  "app_router": true,
+  "qa": {
+    "playwright": true,
+    "smoke_spec": "tests/playwright/smoke.spec.ts"
+  }
+}
