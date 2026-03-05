@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "claw:baseline:gate": "node scripts/claw-baseline-gate.js"
+    "claw:baseline:gate": "node scripts/claw-baseline-gate.js",
+    "check": "npm run -s build"
   },
   "dependencies": {
     "ai": "^2.2.12",
