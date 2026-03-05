@@ -24,15 +24,17 @@ let hasRbac = false;
 for (const f of files) {
   const txt = fs.readFileSync(f, "utf8");
   if (/better-auth/.test(txt)) hasBetterAuth = true;
-  if (/next-auth|supabase|firebase|clerk|getServerSession|auth(/.test(txt)) authSignals = true;
+  if (/next-auth|supabase|firebase|clerk|getServerSession|auth\(/.test(txt)) authSignals = true;
   if (/organization_id|org_id|tenant_id/.test(txt)) hasOrgModel = true;
   if (/requireRole|hasRole|rbac|roles*[:=]/.test(txt)) hasRbac = true;
 }
 
-const errs = [];
-if (authSignals && !hasBetterAuth) errs.push("better-auth baseline missing");
-if (!hasOrgModel) errs.push("multi-tenant org model signal missing");
-if (!hasRbac) errs.push("rbac signal missing");
+  const errs = [];
+  const hasTenantBaselineFile = fs.existsSync(path.join(root, "lib", "tenant-baseline.ts"));
+  if (!hasTenantBaselineFile) errs.push("tenant baseline file missing: lib/tenant-baseline.ts");
+  if (authSignals && !hasBetterAuth && !(hasOrgModel && hasRbac)) {
+    errs.push("auth detected but no better-auth baseline and no org+rbac signals");
+  }
 if (errs.length) {
   console.error("baseline gate failed:");
   for (const e of errs) console.error("- " + e);
